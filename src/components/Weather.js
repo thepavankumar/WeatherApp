@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 
 const api = {
-  key: "d9ca1f61e205826c3ca1aaa8827e889a",
-  base: "https://api.openweathermap.org/data/3.0/"
+  key: "3f876e90419060e49e35b7abb940e987",
+  base: "https://api.openweathermap.org/data/2.5/"
 };
 
-function App() {
+function Weather() {
   const [query, setQuery] = useState('');
   const [weather, setWeather] = useState('');
 
   const search = evt => {
     if (evt.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+      fetch(`${api.base}weather?q=${query}&appid=${api.key}&units=metric`)
         .then((res) =>  res.json())
         .then(result => {
           setWeather(result);
@@ -51,7 +51,7 @@ function App() {
     let month = months[d.getMonth()];
     let year = d.getFullYear();
 
-    return `${day} ${date} ${month} ${year}`;
+    return `${day} , ${date} ${month} ${year}`;
   };
 
   return (
@@ -61,25 +61,31 @@ function App() {
           <input
             type="text"
             className="bar"
-            placeholder="Search"
+            placeholder="Search Location(Ex: Bengaluru)"
             onChange={(e) => setQuery(e.target.value)}
             value={query}
             onKeyDown={search}
           />
+          {/* <button className="btn">Search</button> */}
         </div>
+        {(typeof weather.main != "undefined") ? (<div>
         <div className="location-box">
-          <div className="location"></div>
+          <div className="location">
+            {weather.name},{weather.sys.country}
+          </div>
           <div className="date">{dateBuilder(new Date())}</div>
         </div>
         <div className="weather-box">
           <div className="temp">
-            15 <sup>o</sup>c
+           {Math.floor(weather.main.temp)}<sup>o</sup>C
           </div>
-          <div className="weather">Sunny</div>
+          <div className="weather">{weather.weather[0].main}</div>
         </div>
+        </div>) : ('')}
+        
       </main>
     </div>
   );
 }
 
-export default App;
+export default Weather;
