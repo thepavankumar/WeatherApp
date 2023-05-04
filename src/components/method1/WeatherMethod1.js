@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 const api = {
-  key: "3f876e90419060e49e35b7abb940e987",
-  base: "https://api.openweathermap.org/data/2.5/"
+  key: "d9ca1f61e205826c3ca1aaa8827e889a",
+  base: "https://api.openweathermap.org/data/3.0/"
 };
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
 
   const search = evt => {
     if (evt.key === "Enter") {
-      fetch(`${api.base}weather?q=${query}&appid=${api.key}&units=metric`)
+      fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
         .then((res) =>  res.json())
         .then(result => {
           setWeather(result);
@@ -51,7 +51,7 @@ function App() {
     let month = months[d.getMonth()];
     let year = d.getFullYear();
 
-    return `${day} , ${date} ${month} ${year}`;
+    return `${day} ${date} ${month} ${year}`;
   };
 
   return (
@@ -61,27 +61,22 @@ function App() {
           <input
             type="text"
             className="bar"
-            placeholder="Search Location(Ex: Bengaluru)"
+            placeholder="Search"
             onChange={(e) => setQuery(e.target.value)}
             value={query}
             onKeyDown={search}
           />
         </div>
-        {(typeof weather.main != "undefined") ? (<div>
         <div className="location-box">
-          <div className="location">
-            {weather.name},{weather.sys.country}
-          </div>
+          <div className="location"></div>
           <div className="date">{dateBuilder(new Date())}</div>
         </div>
         <div className="weather-box">
           <div className="temp">
-           {Math.floor(weather.main.temp)}<sup>o</sup>C
+            15 <sup>o</sup>c
           </div>
           <div className="weather">Sunny</div>
         </div>
-        </div>) : ('')}
-        
       </main>
     </div>
   );
