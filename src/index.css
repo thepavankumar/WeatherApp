@@ -113,3 +113,8 @@ main {
   text-shadow: 3px 3px rgba(50, 50, 50, 0.5);;
 }
 
+@media screen and (min-width: 600px) {
+  .search {
+    width: 60%;
+  }
+}
